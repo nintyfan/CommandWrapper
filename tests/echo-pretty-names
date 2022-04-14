@@ -26,6 +26,8 @@ function set_color {
    esac
 }
 
+shown=false
+
 shift
 for a in "$@"; do
   if [[ "$a" == '--ns-echo-pretty-names-fg' ]]; then
@@ -39,7 +41,11 @@ for a in "$@"; do
     set_color
     mode=normal
   else
+   if [[ "$shown" == "true" ]]; then
+      echo -n ' '
+   fi
     echo -n $a
+    shown=true
   fi
 done
 
