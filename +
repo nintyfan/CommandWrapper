@@ -1,0 +1,5 @@
+#!/bin/bash
+
+last=$( export output=$*; echo $CommandWrapper |  while IFS=':' read  command user;  do if [[ "$user" == '' ]] || [[ "$user" == "$USER" ]]; then export output=$($command $output); else export output=$(su  $user --command="$command $output" < /dev/tty); fi; echo $output; done | tail -n 1)
+
+$last
