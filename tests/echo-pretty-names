@@ -13,11 +13,19 @@ shift
 for a in "$@"; do
   if [[ "$a" == '--ns-echo-pretty-names-fg' ]]; then
      mode=foreground
+  elif [[ "$a" == '--ns-echo-pretty-names-bg' ]]; then
+     mode=background
   elif [[ "$mode" == 'foreground' ]]; then
     mode=normal
     case $a in
        'red') echo -ne  "\033[31m";;
        'green') echo -ne "\033[32m";;
+      esac
+  elif [[ "$mode" == 'background' ]]; then
+    mode=normal
+    case $a in
+       'red') echo -ne  "\033[41m";;
+       'green') echo -ne "\033[42m";;
       esac
   else
     echo -n " $a "
