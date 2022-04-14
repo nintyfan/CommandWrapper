@@ -4,6 +4,11 @@ echo -n 'echo '
 echo -n ' -e '
 mode=normal
 
+command=$1
+if [[ "$command" != 'echo' ]]; then
+   exit 0  
+fi
+
 shift
 for a in "$@"; do
   if [[ "$a" == '--ns-echo-pretty-names-fg' ]]; then
