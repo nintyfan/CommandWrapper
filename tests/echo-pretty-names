@@ -11,8 +11,8 @@ for a in "$@"; do
   elif [[ "$mode" == 'foreground' ]]; then
     mode=normal
     case $a in
-       'red') echo -ne  "\033[41m";;
-       'green') echo -ne "\033[42m";;
+       'red') echo -ne  "\043[41m";;
+       'green') echo -ne "\043[42m";;
       esac
   else
     echo -n " $a "
