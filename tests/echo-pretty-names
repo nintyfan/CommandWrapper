@@ -9,6 +9,17 @@ if [[ "$command" != 'echo' ]]; then
    exit  
 fi
 
+function set_color {
+   case $mode in
+     'foreground') term_mode='3';;
+     'background') term_mode='4';;
+   esac
+   case $a in
+   'red') echo -ne  "\033[${term_mode}1m";;
+   'green') echo -ne "\033[${term_mode}2m";;
+   esac
+}
+
 shift
 for a in "$@"; do
   if [[ "$a" == '--ns-echo-pretty-names-fg' ]]; then
@@ -16,17 +27,11 @@ for a in "$@"; do
   elif [[ "$a" == '--ns-echo-pretty-names-bg' ]]; then
      mode=background
   elif [[ "$mode" == 'foreground' ]]; then
+    set_color
     mode=normal
-    case $a in
-       'red') echo -ne  "\033[31m";;
-       'green') echo -ne "\033[32m";;
-      esac
   elif [[ "$mode" == 'background' ]]; then
+    set_color
     mode=normal
-    case $a in
-       'red') echo -ne  "\033[41m";;
-       'green') echo -ne "\033[42m";;
-      esac
   else
     echo -n " $a "
   fi
