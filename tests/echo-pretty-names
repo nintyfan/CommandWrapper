@@ -27,6 +27,9 @@ function set_color {
 }
 
 shown=false
+fg=''
+bg=''
+glue_mode=now
 
 shift
 for a in "$@"; do
@@ -34,15 +37,26 @@ for a in "$@"; do
      mode=foreground
   elif [[ "$a" == '--ns-echo-pretty-names-bg' ]]; then
      mode=background
+  elif [[ "$a" == '--ns-echo-pretty-names-glue' ]]; then
+     mode=glue
+  elif [[ "$mode" == 'glue' ]]; then
+     glue_mode=$a
+     mode=normal
   elif [[ "$mode" == 'foreground' ]]; then
-    set_color
+    fg=`set_color`
     mode=normal
   elif [[ "$mode" == 'background' ]]; then
-    set_color
+    bg=`set_color`
     mode=normal
   else
+   if [[ "$glue_mode" == 'now' ]]; then
+      echo -en ${fg}${bg}
+   fi
    if [[ "$shown" == "true" ]]; then
       echo -n ' '
+   fi
+   if [[ "$glue_mode" == 'prepend' ]]; then
+     echo -en ${fg}${bg}
    fi
     echo -n $a
     shown=true
