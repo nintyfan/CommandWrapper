@@ -15,8 +15,14 @@ function set_color {
      'background') term_mode='4';;
    esac
    case $a in
+   'black')echo -ne  "\033[${term_mode}0m";;
    'red') echo -ne  "\033[${term_mode}1m";;
    'green') echo -ne "\033[${term_mode}2m";;
+   'orange') echo -ne "\033[${term_mode}3m";;
+   'blue') echo -ne "\033[${term_mode}4m";;
+   'mangeta') echo -ne "\033[${term_mode}5m";;
+   'cyan') echo -ne "\033[${term_mode}6m";;
+   'white') echo -ne "\033[${term_mode}7m";;
    esac
 }
 
