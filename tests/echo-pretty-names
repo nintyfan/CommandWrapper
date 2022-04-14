@@ -6,7 +6,7 @@ mode=normal
 
 command=$1
 if [[ "$command" != 'echo' ]]; then
-   exit 0  
+   exit  
 fi
 
 shift
@@ -16,8 +16,8 @@ for a in "$@"; do
   elif [[ "$mode" == 'foreground' ]]; then
     mode=normal
     case $a in
-       'red') echo -ne  "\043[41m";;
-       'green') echo -ne "\043[42m";;
+       'red') echo -ne  "\033[31m";;
+       'green') echo -ne "\033[32m";;
       esac
   else
     echo -n " $a "
