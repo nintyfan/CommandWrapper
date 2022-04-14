@@ -39,7 +39,7 @@ for a in "$@"; do
     set_color
     mode=normal
   else
-    echo -n " $a "
+    echo -n $a
   fi
 done
 
