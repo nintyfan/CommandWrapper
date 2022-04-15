@@ -1,5 +1,40 @@
 #!/bin/bash
 
-last=$( export output=$*; echo $CommandWrapper |  while IFS=':' read  command user;  do if [[ "$user" == '' ]] || [[ "$user" == "$USER" ]]; then export output=$($command $output); else export output=$(su  $user --command="$command $output" < /dev/tty); fi; echo $output; done | tail -n 1)
+show_command=false
+
+arguments=''
+
+for a in $*; do
+
+   if [[ "$skip" == "true" ]]; then
+     arguments="$arguments $a"
+   elif [[ "$a" =~ '--+' ]]; then
+     if [[ "$a" == '--+-show-command-before-execute' ]]; then
+       show_command=true
+     elif [[ "$a" == '--+--' ]]; then
+       skip=true
+      else
+        echo 'Error - unknown switch: '"$a"
+        exit
+      fi
+   else
+      arguments="$arguments $a"
+   fi
+done
+
+last=$( export output=$arguments; echo $CommandWrapper |  while IFS=':' read  command user;  do if [[ "$user" == '' ]] || [[ "$user" == "$USER" ]]; then export output=$($command $output); else export output=$(su  $user --command="$command $output" < /dev/tty); fi; echo $output; done | tail -n 1)
+
+execute=none
+
+while [[ "$show_command" == "true" ]] && [[ "$execute" == "none" ]]; do
+  echo -n 'Command to execute is: '
+  echo $last
+  
+  read -p 'Execute [Y/n]?' execute
+  
+  if [[ "$execute" == 'n' ]] || [[ "$execute" == 'N' ]]; then
+     exit
+  fi
+done
 
 $last
