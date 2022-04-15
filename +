@@ -14,7 +14,7 @@ for a in $*; do
      elif [[ "$a" == '--+--' ]]; then
        skip=true
       else
-        echo 'Error - unknown switch: '"$a"
+        echo 'Error - unknown switch'"$a"
         exit
       fi
    else
@@ -26,7 +26,7 @@ last=$( export output=$arguments; echo $CommandWrapper |  while IFS=':' read  co
 
 execute=none
 
-while [[ "$show_command" == "true" ]] && [[ "$execute" == "none" ]]; do
+while [[ "$show_command" == "true" ]] && [[ "$execute" != "Y" ]]; do
   echo -n 'Command to execute is: '
   echo $last
   
